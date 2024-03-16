@@ -1,0 +1,25 @@
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2.5rem 12rem;
+  border-bottom: 1px solid rgba(#000, 0.1);
+  background-color: #fff;
+
+  &__title {
+    color: #5d87ff;
+  }
+
+  &__balance {
+    background-color: #f3f5f7;
+    font-size: 2.2rem;
+    color: #2a3547;
+    padding: 1rem 2.5rem;
+    border-radius: 5rem;
+
+    &-amount {
+      color: #5d87ff;
+    }
+  }
+}
