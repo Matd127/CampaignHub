@@ -1,0 +1,22 @@
+.home {
+  padding: 6rem 12rem;
+
+  @media only screen and (max-width: 768px) {
+    flex-direction: column;
+    padding: 5rem 6rem;
+  }
+
+  @media only screen and (max-width: 576px) {
+    flex-direction: column;
+    padding: 5rem 3rem;
+  }
+  
+  &__intro {
+    color: #5a6b80;
+    margin-bottom: 3rem;
+  }
+
+  &__title {
+    margin-bottom: 2rem;
+  }
+}

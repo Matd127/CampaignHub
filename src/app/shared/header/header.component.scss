@@ -6,6 +6,17 @@
   padding: 2.5rem 12rem;
   border-bottom: 1px solid rgba(#000, 0.1);
   background-color: #fff;
+  position: sticky;
+
+  @media only screen and (max-width: 768px) {
+    flex-direction: column;
+    padding: 2.5rem 6rem;
+  }
+
+  @media only screen and (max-width: 576px) {
+    flex-direction: column;
+    padding: 2.5rem 3rem;
+  }
 
   &__title {
     color: #5d87ff;
@@ -13,10 +24,14 @@
 
   &__balance {
     background-color: #f3f5f7;
-    font-size: 2.2rem;
+    font-size: 1.8rem;
     color: #2a3547;
-    padding: 1rem 2.5rem;
+    padding: 1.5rem 3rem;
     border-radius: 5rem;
+
+    @media only screen and (max-width: 768px) {
+      margin-top: 2rem;
+    }
 
     &-amount {
       color: #5d87ff;

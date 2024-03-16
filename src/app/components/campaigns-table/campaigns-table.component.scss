@@ -1,0 +1,78 @@
+.campaigns-table {
+  margin-top: 3rem;
+  overflow-x: auto;
+
+  &__data {
+    width: 100%;
+    font-size: 1.6rem;
+    border: 0.1rem solid #d1d6e8;
+    border-radius: 1rem;
+    border-spacing: 0;
+    background-color: #f3f5f7;
+  }
+
+  &__head {
+    background-color: #f3f5f7;
+
+    th {
+      border-bottom: 0.1rem solid #d1d6e8;
+      text-align: left;
+      padding: 1.5rem 2rem;
+
+      &:first-child {
+        border-top-left-radius: 1rem;
+      }
+
+      &:last-child {
+        border-top-right-radius: 1rem;
+      }
+    }
+  }
+
+  &__body {
+    background-color: #fff;
+    border-bottom: 1px solid red;
+
+    tr {
+      border: 1px solid red !important;
+      td {
+        padding: 2rem;
+
+        &:first-child {
+          border-bottom-left-radius: 1rem;
+        }
+        &:last-child {
+          border-bottom-right-radius: 1rem;
+        }
+      }
+    }
+  }
+
+  &__breadcrumb {
+    list-style: none;
+    font-weight: bold;
+
+    li {
+      display: inline;
+      cursor: pointer;
+      margin-right: 0.5rem;
+
+      & + li::before {
+        content: "/\00a0";
+        color: #5a6b80;
+      }
+
+      &[data-action="view"] {
+        color: #5d87ff;
+      }
+
+      &[data-action="edit"] {
+        color: #cc8b19;
+      }
+
+      &[data-action="delete"] {
+        color: #fa896b;
+      }
+    }
+  }
+}
