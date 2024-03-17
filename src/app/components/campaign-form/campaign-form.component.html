@@ -1,0 +1,140 @@
+<div class="campaign-form">
+  <form [formGroup]="campaignForm">
+    <h2 class="campaign-form__title">Create a new campaign</h2>
+
+    <div class="campaign-form__group">
+      <mat-form-field appearance="fill">
+        <mat-label>Name</mat-label>
+        <input
+          matInput
+          formControlName="name"
+          placeholder="Enter your name"
+          type="text"
+        />
+        <mat-error
+          *ngIf="
+            campaignForm.get('name')?.errors &&
+            campaignForm.get('name')?.touched
+          "
+          class="campaign-form__error"
+        >
+          Name must be at least 4 characters long.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="campaign-form__group">
+      <mat-form-field class="example-chip-list">
+        <mat-label>Keywords</mat-label>
+        <mat-chip-grid #chipGrid aria-label="keyword selection">
+          @for (keyword of keywords; track keyword) {
+          <mat-chip-row (removed)="remove(keyword)">
+            {{ keyword }}
+            <button matChipRemove [attr.aria-label]="'remove ' + keyword">
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip-row>
+          }
+        </mat-chip-grid>
+        <input
+          placeholder="Enter Keyword"
+          #keywordInput
+          formControlName="keywords"
+          [matChipInputFor]="chipGrid"
+          [matAutocomplete]="auto"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          (matChipInputTokenEnd)="add($event)"
+        />
+        <mat-autocomplete
+          #auto="matAutocomplete"
+          (optionSelected)="selected($event)"
+        >
+          @for (keyword of filteredkeywords | async; track keyword) {
+          <mat-option [value]="keyword">{{ keyword }}</mat-option>
+          }
+        </mat-autocomplete>
+
+        <mat-error
+          *ngIf="campaignForm.get('keywords')?.touched"
+          class="campaign-form__error"
+        >
+          Keywords cannot be empty.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="campaign-form__group">
+      <mat-form-field appearance="fill">
+        <mat-label>Bid Amount</mat-label>
+        <input
+          matInput
+          formControlName="bidAmount"
+          placeholder="Enter bid amount"
+          type="number"
+        />
+        <mat-error
+          *ngIf="
+            campaignForm.get('bidAmount')?.errors &&
+            campaignForm.get('bidAmount')?.touched
+          "
+          class="campaign-form__error"
+        >
+          Bid amount must be higher than 0.1$.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Status -->
+
+    <div class="campaign-form__group">
+      <mat-form-field appearance="fill">
+        <mat-label>Campaign Fund</mat-label>
+        <input
+          matInput
+          formControlName="campaignFund"
+          placeholder="Enter campaign fund"
+          type="number"
+        />
+        <mat-error
+          *ngIf="
+            campaignForm.get('campaignFund')?.errors &&
+            campaignForm.get('campaignFund')?.touched
+          "
+          class="campaign-form__error"
+        >
+          Campaign Found must be higher than 10$.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="campaign-form__group">
+      <mat-form-field>
+        <mat-label>Town</mat-label>
+        <mat-select formControlName="town">
+          <mat-option *ngFor="let town of towns" [value]="town">{{
+            town
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="campaign-form__group">
+      <mat-label>Radius (km)</mat-label>
+      <mat-slider min="1" max="180" step="1" discrete>
+        <input matSliderThumb formControlName="radius" />
+      </mat-slider>
+    </div>
+
+    <div class="campaign-form__group">
+      <mat-slide-toggle formControlName="status" color="primary">
+        {{ campaignForm.get("status")?.value ? "ON" : "OFF" }}
+      </mat-slide-toggle>
+    </div>
+
+    <app-button
+      title="Add"
+      [disabled]="!campaignForm.valid || keywords.length == 0"
+      (click)="onSubmit()"
+    ></app-button>
+  </form>
+</div>

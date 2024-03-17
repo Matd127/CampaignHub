@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
   title = 'CampaignHub';
-  balance = 1000;
+  balance = localStorage?.getItem('balance') || 1000;
 }

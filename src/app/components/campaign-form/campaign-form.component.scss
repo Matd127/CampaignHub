@@ -1,0 +1,40 @@
+.campaign-form {
+  width: 100%;
+  padding: 3rem;
+  border: 0.1rem solid #d1d6e8;
+  border-radius: 1rem;
+  background-color: #fff;
+
+  &__title {
+    margin-bottom: 2rem;
+  }
+
+  &__label {
+    font-size: 1.6rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+
+  &__error {
+    color: #fa896b;
+    margin-top: .3rem;
+  }
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+
+  &__input {
+    border-radius: 8px;
+    border: 1px solid #dfe5ef;
+    padding: 1rem;
+    outline: none;
+
+    &:focus {
+      border: 1px solid #5d87ff;
+    }
+  }
+}
