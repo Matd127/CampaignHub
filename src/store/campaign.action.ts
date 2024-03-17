@@ -2,9 +2,10 @@ import { Action } from '@ngrx/store';
 import { Campaign } from '../models/Campaign';
 
 export enum ActionTypes {
-  CreateCampaign = '[Campaign] Create',
-  EditCampaign = '[Campaign] Edit',
-  DeleteCampaign = '[Campaign] Delete',
+  ReadCampaigns = '[Campaign] ReadCampaigns',
+  CreateCampaign = '[Campaign] CreateCampaign',
+  EditCampaign = '[Campaign] EditCampaign',
+  DeleteCampaign = '[Campaign] DeleteCampaign',
 }
 
 export class CreateCampaign implements Action {
@@ -23,4 +24,8 @@ export class DeleteCampaign implements Action {
   readonly type = ActionTypes.DeleteCampaign;
 
   constructor(public payload: { id: number }) {}
+}
+
+export class ReadCampaigns implements Action {
+  readonly type = ActionTypes.ReadCampaigns;
 }

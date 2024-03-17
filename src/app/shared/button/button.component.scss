@@ -12,3 +12,18 @@
     cursor: not-allowed;
   }
 }
+
+.button__secondary {
+  background-color: red;
+  color: #fff;
+  border-radius: 0.5rem;
+  padding: 1rem 2.5rem;
+  border: none;
+  cursor: pointer;
+
+  &:disabled {
+    background-color: #ccc;
+    color: #999;
+    cursor: not-allowed;
+  }
+}

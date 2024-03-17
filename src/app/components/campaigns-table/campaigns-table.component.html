@@ -4,6 +4,7 @@
       <thead class="campaigns-table__head">
         <tr>
           <th>ID</th>
+          <th>Name</th>
           <th>Keywords</th>
           <th>Status</th>
           <th>Town</th>
@@ -12,31 +13,29 @@
         </tr>
       </thead>
       <tbody class="campaigns-table__body">
-        <tr>
-          <td>1</td>
-          <td>Something, Another Something</td>
-          <td>On</td>
-          <td>Krakow</td>
-          <td>20 km</td>
+        <tr *ngFor="let campaign of campaigns | async">
+          <td>{{ campaign.id }}</td>
+          <td>{{ campaign.name }}</td>
+          <td>{{ campaign.keywords.join(", ") }}</td>
+          <td>{{ campaign.status ? "On" : "Off" }}</td>
+          <td>{{ campaign.town }}</td>
+          <td>{{ campaign.radius }} km</td>
           <td>
+            <p *ngIf="confirmDelete && campaign.id === deleteId">
+              Are you sure?
+            </p>
             <ul class="campaigns-table__breadcrumb">
-              <li data-action="view">View</li>
+              <li
+                data-action="view"
+                [routerLink]="['/campaign/' + campaign.id]"
+                routerLinkActive="router-link-active"
+              >
+                View
+              </li>
               <li data-action="edit">Edit</li>
-              <li data-action="delete">Delete</li>
-            </ul>
-          </td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Something, Another Something</td>
-          <td>On</td>
-          <td>Warsaw</td>
-          <td>10 km</td>
-          <td>
-            <ul class="campaigns-table__breadcrumb">
-              <li data-action="view">View</li>
-              <li data-action="edit">Edit</li>
-              <li data-action="delete">Delete</li>
+              <li data-action="delete" (click)="deleteCampaign(campaign.id)">
+                Delete
+              </li>
             </ul>
           </td>
         </tr>

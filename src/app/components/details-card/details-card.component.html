@@ -1,0 +1,50 @@
+<div class="details-card">
+  <h2 class="details-card__title">Details</h2>
+  <div class="details-card__row">
+    <div class="details-card__title-col">Id:</div>
+    <div class="details-card__content-col">{{ (campaign | async)?.id }}</div>
+  </div>
+  <div class="details-card__row">
+    <div class="details-card__title-col">Name:</div>
+    <div class="details-card__content-col">{{ (campaign | async)?.name }}</div>
+  </div>
+  <div class="details-card__row">
+    <div class="details-card__title-col">Keywords:</div>
+    <div class="details-card__content-col">
+      {{ (campaign | async)?.keywords?.join(", ") }}
+    </div>
+  </div>
+  <div class="details-card__row">
+    <div class="details-card__title-col">Bid Amount:</div>
+    <div class="details-card__content-col">
+      {{ (campaign | async)?.bidAmount }}$
+    </div>
+  </div>
+  <div class="details-card__row">
+    <div class="details-card__title-col">Campaign Fund:</div>
+    <div class="details-card__content-col">
+      {{ (campaign | async)?.campaignFund }}$
+    </div>
+  </div>
+
+  <div class="details-card__row">
+    <div class="details-card__title-col">Status:</div>
+    <div class="details-card__content-col">
+      {{ (campaign | async)?.status ? "On" : "Off" }}
+    </div>
+  </div>
+  <div class="details-card__row">
+    <div class="details-card__title-col">Town:</div>
+    <div class="details-card__content-col">{{ (campaign | async)?.town }}</div>
+  </div>
+  <div class="details-card__row">
+    <div class="details-card__title-col">Radius:</div>
+    <div class="details-card__content-col">
+      {{ (campaign | async)?.radius }}km
+    </div>
+  </div>
+
+  <div class="details-card__cta">
+    <app-button title="Back to Campaigs" link="/"></app-button>
+  </div>
+</div>

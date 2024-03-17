@@ -1,0 +1,40 @@
+.details-card {
+  width: 100%;
+  padding: 3rem;
+  border: 0.1rem solid #d1d6e8;
+  border-radius: 1rem;
+  background-color: #fff;
+
+  &__title {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  &__row {
+    font-size: 1.8rem;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 0.1rem solid #d1d6e8;
+    padding: 1.5rem 1rem;
+  }
+
+  &__title-col {
+    width: 40%;
+    text-align: left;
+    font-weight: bolder;
+  }
+
+  &__content-col {
+    width: 60%;
+    text-align: left;
+  }
+
+  &__cta {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+}

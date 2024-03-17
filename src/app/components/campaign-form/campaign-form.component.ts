@@ -33,6 +33,8 @@ import { KEYWORDS } from '../../../consts/keywords';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { Router } from '@angular/router';
 import { BalanceService } from '../../../services/balance.service';
+import { Store } from '@ngrx/store';
+import { CreateCampaign } from '../../../store/campaign.action';
 
 @Component({
   selector: 'app-campaign-form',
@@ -64,7 +66,11 @@ export class CampaignFormComponent {
   @ViewChild('keywordInput') keywordInput?: ElementRef<HTMLInputElement>;
   announcer = inject(LiveAnnouncer);
 
-  constructor(private router: Router, private balanceService: BalanceService) {
+  constructor(
+    private router: Router,
+    private balanceService: BalanceService,
+    private store: Store<any>
+  ) {
     const keywordsControl = this.campaignForm.get('keywords');
 
     if (keywordsControl) {
@@ -134,7 +140,19 @@ export class CampaignFormComponent {
     } else {
       this.balanceError = '';
       console.log({ ...data, keywords: this.keywords });
-
+      console.log(typeof data.status);
+      this.store.dispatch(
+        new CreateCampaign({
+          id: Date.now(),
+          name: data.name || '',
+          keywords: this.keywords,
+          bidAmount: Number(data.bidAmount),
+          campaignFund: Number(data.campaignFund),
+          status: Boolean(data.status),
+          town: data.town || '',
+          radius: Number(data.radius),
+        })
+      );
       this.campaignForm.reset();
       this.balanceService.updateBalance(Number(data.campaignFund));
     }

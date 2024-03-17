@@ -1,9 +1,9 @@
 export interface Campaign {
   id: number;
-  campaignName: string;
+  name: string;
   keywords: Array<string>;
   bidAmount: number;
-  campaignFound: number;
+  campaignFund: number;
   status: boolean;
   town: string;
   radius: number;
