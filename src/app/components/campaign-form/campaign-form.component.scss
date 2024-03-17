@@ -20,6 +20,11 @@
     margin-top: 0.3rem;
   }
 
+  &__cta {
+    display: inline-flex;
+    gap: 1rem;
+  }
+
   &__group {
     display: flex;
     flex-direction: column;

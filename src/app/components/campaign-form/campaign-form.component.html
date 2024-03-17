@@ -84,8 +84,6 @@
       </mat-form-field>
     </div>
 
-    <!-- Status -->
-
     <div class="campaign-form__group">
       <mat-form-field appearance="fill">
         <mat-label>Campaign Fund</mat-label>
@@ -126,21 +124,29 @@
     </div>
 
     <div class="campaign-form__group">
+      <mat-label class="campaign-form__label">Status</mat-label>
+
       <mat-slide-toggle formControlName="status" color="primary">
         {{ campaignForm.get("status")?.value ? "ON" : "OFF" }}
       </mat-slide-toggle>
     </div>
 
-    <app-button
-      type="button"
-      title="Back to home"
-      (click)="goBack($event)"
-    ></app-button>
+    <p class="campaign-form__error" *ngIf="balanceError.trim().length > 0">
+      {{ balanceError }}
+    </p>
 
-    <app-button
-      title="Create Campaign"
-      [isDisabled]="!campaignForm.valid || keywords.length == 0"
-      (click)="onSubmit()"
-    ></app-button>
+    <div class="campaign-form__cta">
+      <app-button
+        title="Create Campaign"
+        [isDisabled]="!campaignForm.valid || keywords.length == 0"
+        (click)="onSubmit()"
+      ></app-button>
+
+      <app-button
+        type="button"
+        title="Back to home"
+        (click)="goBack($event)"
+      ></app-button>
+    </div>
   </form>
 </div>

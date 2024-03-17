@@ -10,7 +10,6 @@ import { RouterModule } from '@angular/router';
 })
 export class ButtonComponent {
   @Input() title: string = '';
-  // @Input() disabled: boolean = false;
   @Input() link: string | null = null;
   @Input() isDisabled: boolean = false;
 }

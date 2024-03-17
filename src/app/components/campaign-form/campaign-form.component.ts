@@ -14,7 +14,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { Component, inject, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component,
+  inject,
+  ViewChild,
+  ElementRef,
+  OnInit,
+} from '@angular/core';
 import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -26,6 +32,7 @@ import {
 import { KEYWORDS } from '../../../consts/keywords';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { Router } from '@angular/router';
+import { BalanceService } from '../../../services/balance.service';
 
 @Component({
   selector: 'app-campaign-form',
@@ -48,8 +55,7 @@ import { Router } from '@angular/router';
   styleUrl: './campaign-form.component.scss',
 })
 export class CampaignFormComponent {
-  balance = localStorage?.getItem('balance') || 1000;
-
+  balanceError = '';
   towns = TOWNS;
   keywords: string[] = [];
   separatorKeysCodes: number[] = [ENTER, COMMA];
@@ -57,6 +63,19 @@ export class CampaignFormComponent {
   allkeywords: string[] = KEYWORDS;
   @ViewChild('keywordInput') keywordInput?: ElementRef<HTMLInputElement>;
   announcer = inject(LiveAnnouncer);
+
+  constructor(private router: Router, private balanceService: BalanceService) {
+    const keywordsControl = this.campaignForm.get('keywords');
+
+    if (keywordsControl) {
+      this.filteredkeywords = keywordsControl.valueChanges.pipe(
+        startWith(null),
+        map((keyword: string | null) =>
+          keyword ? this.filter(keyword) : this.allkeywords.slice()
+        )
+      );
+    }
+  }
 
   campaignForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(4)]),
@@ -70,19 +89,6 @@ export class CampaignFormComponent {
     radius: new FormControl(0, [Validators.required, Validators.min(1)]),
     status: new FormControl('', [Validators.required]),
   });
-
-  constructor(private router: Router) {
-    const keywordsControl = this.campaignForm.get('keywords');
-
-    if (keywordsControl) {
-      this.filteredkeywords = keywordsControl.valueChanges.pipe(
-        startWith(null),
-        map((keyword: string | null) =>
-          keyword ? this.filter(keyword) : this.allkeywords.slice()
-        )
-      );
-    }
-  }
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
@@ -120,8 +126,17 @@ export class CampaignFormComponent {
 
   onSubmit() {
     const data = this.campaignForm.value;
-    const curBalance = Number(this.balance) - Number(data.campaignFund);
-    localStorage.setItem('balance', JSON.stringify(curBalance));
-    console.log({ ...data, keywords: this.keywords });
+    const balance = localStorage?.getItem('balance') || 1000;
+
+    if (Number(data.campaignFund) > +balance) {
+      this.balanceError = "You don't have enough money!";
+      return;
+    } else {
+      this.balanceError = '';
+      console.log({ ...data, keywords: this.keywords });
+
+      this.campaignForm.reset();
+      this.balanceService.updateBalance(Number(data.campaignFund));
+    }
   }
 }
