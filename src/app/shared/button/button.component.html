@@ -1,1 +1,7 @@
-<button class="button__primary" >{{ title }}</button>
+<button
+  class="button__primary"
+  [attr.disabled]="isDisabled ? true : null"
+  [routerLink]="link ? ['/create'] : null"
+>
+  {{ title }}
+</button>

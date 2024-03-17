@@ -25,6 +25,7 @@ import {
 } from '@angular/material/autocomplete';
 import { KEYWORDS } from '../../../consts/keywords';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-campaign-form',
@@ -70,7 +71,7 @@ export class CampaignFormComponent {
     status: new FormControl('', [Validators.required]),
   });
 
-  constructor() {
+  constructor(private router: Router) {
     const keywordsControl = this.campaignForm.get('keywords');
 
     if (keywordsControl) {
@@ -109,6 +110,12 @@ export class CampaignFormComponent {
     return this.allkeywords.filter((keyword) =>
       keyword.toLowerCase().includes(filterValue)
     );
+  }
+
+  goBack(e: Event) {
+    e.preventDefault();
+    e.stopPropagation();
+    this.router.navigateByUrl('/');
   }
 
   onSubmit() {

@@ -119,7 +119,7 @@
     </div>
 
     <div class="campaign-form__group">
-      <mat-label>Radius (km)</mat-label>
+      <mat-label class="campaign-form__label">Radius (km)</mat-label>
       <mat-slider min="1" max="180" step="1" discrete>
         <input matSliderThumb formControlName="radius" />
       </mat-slider>
@@ -132,8 +132,14 @@
     </div>
 
     <app-button
-      title="Add"
-      [disabled]="!campaignForm.valid || keywords.length == 0"
+      type="button"
+      title="Back to home"
+      (click)="goBack($event)"
+    ></app-button>
+
+    <app-button
+      title="Create Campaign"
+      [isDisabled]="!campaignForm.valid || keywords.length == 0"
       (click)="onSubmit()"
     ></app-button>
   </form>

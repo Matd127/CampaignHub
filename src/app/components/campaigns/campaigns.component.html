@@ -1,7 +1,11 @@
 <section class="campaigns">
   <div class="campaigns__header">
     <h2 class="campaigns__title">Campaigns</h2>
-    <app-button [title]="'+ New campaign'" />
+    <app-button
+      [title]="'+ New campaign'"
+      [link]="'/create'"
+      routerLinkActive="router-link-active"
+    />
   </div>
   <app-campaigns-table />
 </section>
