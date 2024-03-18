@@ -34,8 +34,4 @@ export class CampaignsTableComponent {
       this.deleteId = id;
     }
   }
-
-  onClick(param: string) {
-    console.log(param);
-  }
 }

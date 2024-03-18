@@ -1,4 +1,5 @@
 <div class="campaigns-table">
+  <p class="campaigns-table__warning" *ngIf="(campaigns | async)?.length == 0">No records found.</p>
   <div class="campaigns-table__border">
     <table class="campaigns-table__data">
       <thead class="campaigns-table__head">

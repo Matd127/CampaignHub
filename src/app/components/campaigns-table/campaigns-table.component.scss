@@ -2,6 +2,10 @@
   margin-top: 3rem;
   overflow-x: auto;
 
+  &__warning {
+    margin-bottom: 2rem;
+  }
+
   &__data {
     width: 100%;
     font-size: 1.6rem;

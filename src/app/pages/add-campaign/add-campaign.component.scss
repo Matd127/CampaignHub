@@ -2,18 +2,10 @@
   padding: 6rem 25rem;
 
   @media only screen and (max-width: 1200px) {
-    padding: 6rem 20rem;
-  }
-
-  @media only screen and (max-width: 992px) {
     padding: 6rem 15rem;
   }
 
   @media only screen and (max-width: 768px) {
-    padding: 6rem 10rem;
-  }
-
-  @media only screen and (max-width: 576px) {
     padding: 6rem 3rem;
   }
 }

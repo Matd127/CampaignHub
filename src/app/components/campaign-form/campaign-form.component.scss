@@ -21,8 +21,12 @@
   }
 
   &__cta {
-    display: inline-flex;
+    display: flex;
     gap: 1rem;
+
+    @media only screen and (max-width: 576px) {
+      flex-direction: column;
+    }
   }
 
   &__group {
@@ -30,6 +34,10 @@
     flex-direction: column;
     gap: 0.5rem;
     margin-bottom: 2rem;
+
+    @media only screen and (max-width: 576px) {
+      margin-bottom: 3rem;
+    }
   }
 
   &__input {

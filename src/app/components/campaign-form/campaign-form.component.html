@@ -18,7 +18,7 @@
           "
           class="campaign-form__error"
         >
-          Name must be at least 4 characters long.
+          Name must be at least 3 characters long.
         </mat-error>
       </mat-form-field>
     </div>
@@ -113,12 +113,21 @@
             town
           }}</mat-option>
         </mat-select>
+        <mat-error
+          *ngIf="
+            campaignForm.get('town')?.errors &&
+            campaignForm.get('town')?.touched
+          "
+          class="campaign-form__error"
+        >
+          Town is required.
+        </mat-error>
       </mat-form-field>
     </div>
 
     <div class="campaign-form__group">
       <mat-label class="campaign-form__label">Radius (km)</mat-label>
-      <mat-slider min="1" max="180" step="1" discrete>
+      <mat-slider min="1" max="180" step="1" discrete >
         <input matSliderThumb formControlName="radius" />
       </mat-slider>
     </div>
@@ -130,10 +139,6 @@
         {{ campaignForm.get("status")?.value ? "ON" : "OFF" }}
       </mat-slide-toggle>
     </div>
-
-    <p class="campaign-form__error" *ngIf="balanceError.trim().length > 0">
-      {{ balanceError }}
-    </p>
 
     <div class="campaign-form__cta">
       <app-button
