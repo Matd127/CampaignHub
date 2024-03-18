@@ -1,6 +1,6 @@
 <header class="header">
   <h1 class="header__title" [routerLink]="['/']">{{ title }}</h1>
   <div class="header__balance">
-    Your balance: <span class="header__balance-amount">{{ balance$ | async }}$</span>
+    Your balance: <span class="header__balance-amount">${{ balance$ | async }}</span>
   </div>
 </header>

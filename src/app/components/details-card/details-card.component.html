@@ -17,13 +17,13 @@
   <div class="details-card__row">
     <div class="details-card__title-col">Bid Amount:</div>
     <div class="details-card__content-col">
-      {{ (campaign | async)?.bidAmount }}$
+      ${{ (campaign | async)?.bidAmount }}
     </div>
   </div>
   <div class="details-card__row">
     <div class="details-card__title-col">Campaign Fund:</div>
     <div class="details-card__content-col">
-      {{ (campaign | async)?.campaignFund }}$
+      ${{ (campaign | async)?.campaignFund }}
     </div>
   </div>
 
@@ -40,7 +40,7 @@
   <div class="details-card__row">
     <div class="details-card__title-col">Radius:</div>
     <div class="details-card__content-col">
-      {{ (campaign | async)?.radius }}km
+      {{ (campaign | async)?.radius }} km
     </div>
   </div>
 

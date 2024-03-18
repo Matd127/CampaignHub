@@ -1,5 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { StoreModule } from '@ngrx/store';
 import { CampaignsTableComponent } from './campaigns-table.component';
 
 describe('CampaignsTableComponent', () => {
@@ -8,10 +11,14 @@ describe('CampaignsTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CampaignsTableComponent]
-    })
-    .compileComponents();
-    
+      imports: [
+        CommonModule,
+        RouterModule,
+        FormsModule,
+        StoreModule.forRoot({}),
+      ],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(CampaignsTableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
