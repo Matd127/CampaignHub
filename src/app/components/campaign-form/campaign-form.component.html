@@ -1,6 +1,8 @@
 <div class="campaign-form">
   <form [formGroup]="campaignForm">
-    <h2 class="campaign-form__title">Create a new campaign</h2>
+    <h2 class="campaign-form__title">
+      {{ campaignId ? "Edit campaign" : "Create a new campaign" }}
+    </h2>
 
     <div class="campaign-form__group">
       <mat-form-field appearance="fill">
@@ -127,7 +129,7 @@
 
     <div class="campaign-form__group">
       <mat-label class="campaign-form__label">Radius (km)</mat-label>
-      <mat-slider min="1" max="180" step="1" discrete >
+      <mat-slider min="1" max="180" step="1" discrete>
         <input matSliderThumb formControlName="radius" />
       </mat-slider>
     </div>
@@ -142,7 +144,7 @@
 
     <div class="campaign-form__cta">
       <app-button
-        title="Create Campaign"
+        [title]="campaignId ? 'Edit campaign' : 'Create a new campaign'"
         [isDisabled]="!campaignForm.valid || keywords.length == 0"
         (click)="onSubmit()"
       ></app-button>

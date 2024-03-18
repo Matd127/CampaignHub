@@ -1,3 +1,4 @@
+import { Component, ElementRef, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormControl,
@@ -6,30 +7,34 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { TOWNS } from '../../../consts/towns';
-import { ButtonComponent } from '../../shared/button/button.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { Component, inject, ViewChild, ElementRef } from '@angular/core';
-import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
+import { MatChipsModule, MatChipInputEvent } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
 import {
-  MatAutocompleteSelectedEvent,
   MatAutocompleteModule,
+  MatAutocompleteSelectedEvent,
 } from '@angular/material/autocomplete';
-import { KEYWORDS } from '../../../consts/keywords';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { BalanceService } from '../../../services/balance.service';
 import { Store } from '@ngrx/store';
-import { CreateCampaign } from '../../../store/campaign.action';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import {
+  CreateCampaign,
+  EditCampaign,
+  ReadCampaigns,
+} from '../../../store/campaign.action';
+import { TOWNS } from '../../../consts/towns';
+import { KEYWORDS } from '../../../consts/keywords';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { ButtonComponent } from '../../shared/button/button.component';
+import { Campaign } from '../../../models/Campaign';
 
 @Component({
   selector: 'app-campaign-form',
@@ -52,18 +57,21 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './campaign-form.component.scss',
 })
 export class CampaignFormComponent {
-  towns = TOWNS;
+  towns: string[] = TOWNS;
+  allkeywords: string[] = KEYWORDS;
+  campaignId: number | undefined;
+  campaign!: Observable<Campaign>;
   keywords: string[] = [];
   separatorKeysCodes: number[] = [ENTER, COMMA];
   filteredkeywords: Observable<string[]> = of([]);
-  allkeywords: string[] = KEYWORDS;
   announcer = inject(LiveAnnouncer);
   @ViewChild('keywordInput') keywordInput?: ElementRef<HTMLInputElement>;
 
   constructor(
-    private router: Router,
-    private balanceService: BalanceService,
     private store: Store<any>,
+    private router: Router,
+    private route: ActivatedRoute,
+    private balanceService: BalanceService,
     private _snackBar: MatSnackBar
   ) {
     const keywordsControl = this.campaignForm.get('keywords');
@@ -78,6 +86,37 @@ export class CampaignFormComponent {
     }
   }
 
+  ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      this.campaignId = +params['id'];
+      this.store.dispatch(new ReadCampaigns());
+      this.campaign = this.store
+        .select('campaigns')
+        .pipe(
+          map((campaigns) =>
+            campaigns.find(
+              (campaign: Campaign) => campaign.id === this.campaignId
+            )
+          )
+        );
+    });
+
+    this.campaign.subscribe((campaign: Campaign | undefined) => {
+      if (campaign) {
+        this.campaignForm.patchValue({
+          name: campaign.name,
+          keywords: '',
+          bidAmount: String(campaign.bidAmount),
+          campaignFund: String(campaign.campaignFund),
+          town: campaign.town,
+          radius: campaign.radius,
+          status: campaign.status,
+        });
+        this.keywords = [...campaign.keywords];
+      }
+    });
+  }
+
   campaignForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(3)]),
     keywords: new FormControl(''),
@@ -88,7 +127,7 @@ export class CampaignFormComponent {
     ]),
     town: new FormControl('', [Validators.required]),
     radius: new FormControl(0, [Validators.required, Validators.min(1)]),
-    status: new FormControl(''),
+    status: new FormControl(false),
   });
 
   add(event: MatChipInputEvent): void {
@@ -135,26 +174,39 @@ export class CampaignFormComponent {
     const data = this.campaignForm.value;
     const balance = localStorage?.getItem('balance') || 1000;
 
-    if (Number(data.campaignFund) > +balance) {
+    const campaignDetails = {
+      id: this.campaignId ? this.campaignId : Date.now(),
+      name: data.name || '',
+      keywords: this.keywords,
+      bidAmount: Number(data.bidAmount),
+      campaignFund: Number(data.campaignFund),
+      status: Boolean(data.status),
+      town: data.town || '',
+      radius: Number(data.radius),
+    };
+
+    if (this.campaignId) {
+      this.updateCampaign(campaignDetails);
+    } else {
+      this.createCampaign(campaignDetails, balance);
+    }
+  }
+
+  updateCampaign(campaignDetails: Campaign) {
+    this.store.dispatch(new EditCampaign(campaignDetails));
+    this.openSnackBar('Successfully updated campaign.');
+  }
+
+  createCampaign(campaignDetails: Campaign, balance: string | number) {
+    if (campaignDetails.campaignFund > +balance) {
       this.openSnackBar('You do not have enough balance.');
       return;
-    } else {
-      this.store.dispatch(
-        new CreateCampaign({
-          id: Date.now(),
-          name: data.name || '',
-          keywords: this.keywords,
-          bidAmount: Number(data.bidAmount),
-          campaignFund: Number(data.campaignFund),
-          status: Boolean(data.status),
-          town: data.town || '',
-          radius: Number(data.radius),
-        })
-      );
-      this.campaignForm.reset();
-      this.keywords = [];
-      this.balanceService.updateBalance(Number(data.campaignFund));
-      this.openSnackBar('Successfully created new campaign.');
     }
+
+    this.store.dispatch(new CreateCampaign(campaignDetails));
+    this.campaignForm.reset();
+    this.keywords = [];
+    this.balanceService.updateBalance(campaignDetails.campaignFund);
+    this.openSnackBar('Successfully created new campaign.');
   }
 }

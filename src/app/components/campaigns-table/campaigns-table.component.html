@@ -1,5 +1,7 @@
 <div class="campaigns-table">
-  <p class="campaigns-table__warning" *ngIf="(campaigns | async)?.length == 0">No records found.</p>
+  <p class="campaigns-table__warning" *ngIf="(campaigns | async)?.length == 0">
+    No records found.
+  </p>
   <div class="campaigns-table__border">
     <table class="campaigns-table__data">
       <thead class="campaigns-table__head">
@@ -33,7 +35,13 @@
               >
                 View
               </li>
-              <li data-action="edit">Edit</li>
+              <li
+                data-action="edit"
+                [routerLink]="['/edit/' + campaign.id]"
+                routerLinkActive="router-link-active"
+              >
+                Edit
+              </li>
               <li data-action="delete" (click)="deleteCampaign(campaign.id)">
                 Delete
               </li>

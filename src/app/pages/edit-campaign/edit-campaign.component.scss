@@ -1,0 +1,11 @@
+.edit-campaign {
+  padding: 6rem 25rem;
+
+  @media only screen and (max-width: 1200px) {
+    padding: 6rem 15rem;
+  }
+
+  @media only screen and (max-width: 768px) {
+    padding: 6rem 3rem;
+  }
+}

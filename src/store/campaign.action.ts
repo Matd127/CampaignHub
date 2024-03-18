@@ -17,7 +17,7 @@ export class CreateCampaign implements Action {
 export class EditCampaign implements Action {
   readonly type = ActionTypes.EditCampaign;
 
-  constructor(public payload: { id: number }) {}
+  constructor(public payload: Campaign) {}
 }
 
 export class DeleteCampaign implements Action {

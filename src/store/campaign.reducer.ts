@@ -19,7 +19,27 @@ export function campaignReducer(state = campaigns, action: Action) {
       return newCampaign;
 
     case ActionTypes.EditCampaign:
-      return state;
+      const editAction = action as CreateCampaign;
+      const updatedCampain = editAction.payload;
+
+      const updatedCampaigns = state.map((campaign) => {
+        if (campaign.id === updatedCampain.id) {
+          return {
+            id: updatedCampain.id,
+            name: updatedCampain.name,
+            keywords: updatedCampain.keywords,
+            bidAmount: updatedCampain.bidAmount,
+            campaignFund: updatedCampain.campaignFund,
+            town: updatedCampain.town,
+            radius: updatedCampain.radius,
+            status: updatedCampain.status,
+          };
+        } else {
+          return campaign;
+        }
+      });
+      localStorage.setItem('campaigns', JSON.stringify(updatedCampaigns));
+      return updatedCampaigns;
     case ActionTypes.DeleteCampaign:
       const deleteAction = action as DeleteCampaign;
       const { id } = deleteAction.payload;
