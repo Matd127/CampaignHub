@@ -1,12 +1,6 @@
 import { Component, ElementRef, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  FormControl,
-  FormGroup,
-  FormsModule,
-  Validators,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -35,7 +29,7 @@ import { KEYWORDS } from '../../../consts/keywords';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { ButtonComponent } from '../../shared/button/button.component';
 import { Campaign } from '../../../models/Campaign';
-
+import { CampaignForm } from '../../../models/campaignForm';
 @Component({
   selector: 'app-campaign-form',
   standalone: true,
@@ -59,6 +53,7 @@ import { Campaign } from '../../../models/Campaign';
 export class CampaignFormComponent {
   towns: string[] = TOWNS;
   allkeywords: string[] = KEYWORDS;
+  campaignForm: FormGroup = CampaignForm;
   campaignId: number | undefined;
   campaign!: Observable<Campaign>;
   keywords: string[] = [];
@@ -113,22 +108,11 @@ export class CampaignFormComponent {
           status: campaign.status,
         });
         this.keywords = [...campaign.keywords];
+      } else {
+        this.campaignForm.reset();
       }
     });
   }
-
-  campaignForm = new FormGroup({
-    name: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    keywords: new FormControl(''),
-    bidAmount: new FormControl('', [Validators.required, Validators.min(0.1)]),
-    campaignFund: new FormControl('', [
-      Validators.required,
-      Validators.min(10),
-    ]),
-    town: new FormControl('', [Validators.required]),
-    radius: new FormControl(0, [Validators.required, Validators.min(1)]),
-    status: new FormControl(false),
-  });
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
@@ -166,7 +150,6 @@ export class CampaignFormComponent {
 
   goBack(e: Event) {
     e.preventDefault();
-    e.stopPropagation();
     this.router.navigateByUrl('/');
   }
 
