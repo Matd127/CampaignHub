@@ -1,27 +1,48 @@
 # CampaignHub
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.0.
+## Live Version
 
-## Development server
+[CampaignHub Live Version](https://master--campaignhubapp.netlify.app/)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## General Information
 
-## Code scaffolding
+This project allows sellers to create, edit or delete a separate campaign for various products.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Features
 
-## Build
+- Create new campaigns
+- Modify existing campaigns
+- Delete campaigns
+- Read the list of campaigns
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Technologies Used
 
-## Running unit tests
+- HTML
+- SCSS
+- TypeScript
+- Angular 17
+- NgRx
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Getting Started
 
-## Running end-to-end tests
+Clone the repository:
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```
+git clone https://github.com/Matd127/CampaignHub
+```
 
-## Further help
+Navigate to the project directory:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```
+src
+```
+
+Install dependencies:
+```
+npm install
+```
+
+Start the development server:
+```
+npx ng serve
+```
