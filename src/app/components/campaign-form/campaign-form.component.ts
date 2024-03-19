@@ -170,14 +170,22 @@ export class CampaignFormComponent {
       radius: Number(data.radius),
     };
 
-    if (campaignDetails.campaignFund > +balance) {
-      this.openSnackBar('You do not have enough balance.');
-      return;
-    }
-
     if (this.campaignId) {
+      if (
+        campaignDetails.campaignFund >
+        this.currentBalance + Number(localStorage?.getItem('balance'))
+      ) {
+        this.openSnackBar('You do not have enough balance.');
+        return;
+      }
+
       this.updateCampaign(campaignDetails);
     } else {
+      if (campaignDetails.campaignFund > +balance) {
+        this.openSnackBar('You do not have enough balance.');
+        return;
+      }
+
       this.createCampaign(campaignDetails);
     }
   }
