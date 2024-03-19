@@ -61,21 +61,33 @@
       cursor: pointer;
       margin-right: 0.5rem;
 
+      @media only screen and (max-width: 1200px) {
+        display: flex;
+        flex-direction: column;
+      }
+
       & + li::before {
         content: "/\00a0";
         color: #5a6b80;
+
+        @media only screen and (max-width: 1200px) {
+          content: "";
+        }
       }
 
       &[data-action="view"] {
         color: #5d87ff;
+        padding: 1rem 0;
       }
 
       &[data-action="edit"] {
         color: #cc8b19;
+        padding: 1rem 0;
       }
 
       &[data-action="delete"] {
         color: #fa896b;
+        padding: 1rem 0;
       }
     }
   }
