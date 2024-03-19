@@ -7,7 +7,7 @@
   border-bottom: 1px solid rgba(#000, 0.1);
   background-color: #fff;
 
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 800px) {
     flex-direction: column;
     padding: 2.5rem 6rem;
   }
@@ -29,8 +29,9 @@
     padding: 1.5rem 3rem;
     border-radius: 5rem;
 
-    @media only screen and (max-width: 768px) {
+    @media only screen and (max-width: 800px) {
       margin-top: 2rem;
+      text-align: center;
     }
 
     &-amount {
