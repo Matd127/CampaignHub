@@ -168,10 +168,15 @@ export class CampaignFormComponent {
       radius: Number(data.radius),
     };
 
+    if (campaignDetails.campaignFund > +balance) {
+      this.openSnackBar('You do not have enough balance.');
+      return;
+    }
+
     if (this.campaignId) {
       this.updateCampaign(campaignDetails);
     } else {
-      this.createCampaign(campaignDetails, balance);
+      this.createCampaign(campaignDetails);
     }
   }
 
@@ -180,12 +185,7 @@ export class CampaignFormComponent {
     this.openSnackBar('Successfully updated campaign.');
   }
 
-  createCampaign(campaignDetails: Campaign, balance: string | number) {
-    if (campaignDetails.campaignFund > +balance) {
-      this.openSnackBar('You do not have enough balance.');
-      return;
-    }
-
+  createCampaign(campaignDetails: Campaign) {
     this.store.dispatch(new CreateCampaign(campaignDetails));
     this.campaignForm.reset();
     this.keywords = [];
