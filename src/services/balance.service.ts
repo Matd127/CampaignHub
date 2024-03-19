@@ -5,7 +5,8 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class BalanceService {
-  private balance: number = Number(localStorage?.getItem('balance')) || 1000;
+  private balance: number = localStorage?.getItem('balance') !== null ? Number(localStorage.getItem('balance')) : 1000;
+
   
   private balanceSubject = new BehaviorSubject<number>(this.balance);
   balance$ = this.balanceSubject.asObservable();
