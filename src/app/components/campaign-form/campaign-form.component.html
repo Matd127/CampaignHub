@@ -144,7 +144,7 @@
 
     <div class="campaign-form__cta">
       <app-button
-        [title]="campaignId ? 'Edit campaign' : 'Create a new campaign'"
+        [title]="campaignId ? 'Save Changes' : 'Create a new campaign'"
         [isDisabled]="!campaignForm.valid || keywords.length == 0"
         (click)="onSubmit()"
       ></app-button>

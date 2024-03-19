@@ -51,6 +51,7 @@ import { CampaignForm } from '../../../models/campaignForm';
   styleUrl: './campaign-form.component.scss',
 })
 export class CampaignFormComponent {
+  currentBalance!: number;
   towns: string[] = TOWNS;
   allkeywords: string[] = KEYWORDS;
   campaignForm: FormGroup = CampaignForm;
@@ -108,6 +109,7 @@ export class CampaignFormComponent {
           status: campaign.status,
         });
         this.keywords = [...campaign.keywords];
+        this.currentBalance = campaign.campaignFund;
       } else {
         this.campaignForm.reset();
       }
@@ -181,6 +183,8 @@ export class CampaignFormComponent {
   }
 
   updateCampaign(campaignDetails: Campaign) {
+    const fundDifference = campaignDetails.campaignFund - this.currentBalance;
+    this.balanceService.updateBalance(fundDifference);
     this.store.dispatch(new EditCampaign(campaignDetails));
     this.openSnackBar('Successfully updated campaign.');
   }
