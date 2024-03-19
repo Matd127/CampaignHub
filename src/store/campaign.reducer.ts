@@ -11,7 +11,7 @@ const campaigns: Campaign[] = existingData
       {
         id: 1010858033631,
         name: 'Summer Sale',
-        keywords: ['summer', 'sale', 'discount'],
+        keywords: ['Summer', 'Sale', 'Discount'],
         bidAmount: 0.5,
         campaignFund: 100,
         status: false,
@@ -21,7 +21,7 @@ const campaigns: Campaign[] = existingData
       {
         id: 1010858033632,
         name: 'Holiday Campaign',
-        keywords: ['holiday', 'gift', 'promotion'],
+        keywords: ['Holiday', 'Gift'],
         bidAmount: 0.7,
         campaignFund: 200,
         status: false,
